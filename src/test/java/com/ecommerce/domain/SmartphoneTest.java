@@ -1,5 +1,7 @@
-package com.ecommerce.product;
+package com.ecommerce.domain;
 
+import com.ecommerce.domain.product.Accessory;
+import com.ecommerce.domain.product.Smartphone;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

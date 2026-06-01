@@ -1,5 +1,6 @@
-package com.ecommerce.product;
+package com.ecommerce.domain;
 
+import com.ecommerce.domain.product.Electronics;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

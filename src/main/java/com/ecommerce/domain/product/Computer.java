@@ -1,8 +1,7 @@
-package com.ecommerce.product;
+package com.ecommerce.domain.product;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NonNull;
 
 import java.math.BigDecimal;
 

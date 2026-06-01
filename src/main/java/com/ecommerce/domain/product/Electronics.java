@@ -1,4 +1,4 @@
-package com.ecommerce.product;
+package com.ecommerce.domain.product;
 
 import lombok.Builder;
 
