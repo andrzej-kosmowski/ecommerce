@@ -4,6 +4,7 @@ import com.ecommerce.domain.product.Product;
 import com.ecommerce.repository.product.ProductRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public class ProductService {
 
@@ -34,6 +35,10 @@ public class ProductService {
 
     public List<Product> getAllProducts() {
         return productRepository.findAll();
+    }
+
+    public Optional<Product> getProductById(String id) {
+        return productRepository.findById(id);
     }
 
     private void validate(Product product) {
