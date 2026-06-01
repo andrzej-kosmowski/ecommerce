@@ -12,6 +12,7 @@ public class Order {
     private final List<OrderItem> items;
     private final BigDecimal totalPrice;
     private final Client client;
+    private OrderStatus status;
 
     public Order(List<OrderItem> items, BigDecimal totalPrice, Client client) {
 
@@ -20,6 +21,19 @@ public class Order {
         this.items = List.copyOf(items);
         this.totalPrice = totalPrice;
         this.client = client;
+        this.status = OrderStatus.NEW;
+    }
+
+    public void processing() {
+        status = OrderStatus.PROCESSING;
+    }
+
+    public void completed() {
+        status = OrderStatus.COMPLETED;
+    }
+
+    public void cancel() {
+        status = OrderStatus.CANCELLED;
     }
 
     private void validate(List<OrderItem> items, Client client) {
