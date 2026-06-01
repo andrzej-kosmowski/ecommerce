@@ -18,9 +18,9 @@ public class Cart {
 
         if (items.containsKey(id)) {
             items.get(id).increase(quantity);
+        } else {
+            items.put(id, new CartItem(product, quantity));
         }
-
-        items.put(id, new CartItem(product, quantity));
     }
 
     public void remove (String productId) {
