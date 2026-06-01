@@ -2,6 +2,9 @@ package com.ecommerce.service.cart;
 
 import com.ecommerce.domain.cart.Cart;
 import com.ecommerce.domain.cart.CartItem;
+import com.ecommerce.domain.order.Client;
+import com.ecommerce.domain.order.Order;
+import com.ecommerce.domain.order.OrderItem;
 import com.ecommerce.domain.product.Product;
 import com.ecommerce.service.product.ProductService;
 
@@ -34,5 +37,26 @@ public class CartService {
 
     public void removeFromCart(String productId) {
         cart.remove(productId);
+    }
+
+    public Order checkout(Client client) {
+        if (cart.isEmpty()) {
+            throw new IllegalArgumentException("Cart is empty");
+        }
+
+        List<OrderItem> items = cart.getItems()
+                .stream()
+                .map(ci -> new OrderItem(ci.getProduct(), ci.getQuantity()))
+                .toList();
+
+        Order order = new Order(
+                items,
+                cart.totalPrice(),
+                client
+        );
+
+        cart.clear();
+
+        return order;
     }
 }
