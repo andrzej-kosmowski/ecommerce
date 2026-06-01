@@ -35,7 +35,6 @@ class BillingServiceTest {
 
         order = new Order(
                 List.of(orderItem),
-                BigDecimal.valueOf(199),
                 client
         );
     }

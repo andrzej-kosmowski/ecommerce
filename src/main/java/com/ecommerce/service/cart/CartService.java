@@ -51,7 +51,6 @@ public class CartService {
 
         Order order = new Order(
                 items,
-                cart.totalPrice(),
                 client
         );
 

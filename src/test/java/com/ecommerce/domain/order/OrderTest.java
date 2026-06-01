@@ -13,13 +13,12 @@ import static org.assertj.core.api.Assertions.*;
 @DisplayName("Order domain logic")
 class OrderTest {
 
-    private Product product;
     private Client client;
     private OrderItem orderItem;
 
     @BeforeEach
     void setUp() {
-        product = new Electronics(
+        Product product = new Electronics(
                 "E-1",
                 "Mouse",
                 BigDecimal.valueOf(199),
@@ -36,7 +35,6 @@ class OrderTest {
     void shouldCalculateTotalPriceWhenOrderIsValid() {
         Order order = new Order(
                 List.of(orderItem),
-                orderItem.getTotalPrice(),
                 client
         );
 
@@ -49,7 +47,7 @@ class OrderTest {
     void shouldThrowExceptionWhenItemsAreEmpty() {
 
         assertThatThrownBy(() ->
-                new Order(List.of(), BigDecimal.ZERO, client))
+                new Order(List.of(), client))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("Order must have items");
     }
@@ -59,7 +57,7 @@ class OrderTest {
     void shouldThrowExceptionWhenClientIsNull() {
 
         assertThatThrownBy(() ->
-                new Order(List.of(orderItem), orderItem.getTotalPrice(), null))
+                new Order(List.of(orderItem), null))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("client cannot be null");
     }
