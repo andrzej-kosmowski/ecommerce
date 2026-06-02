@@ -3,6 +3,7 @@ package com.ecommerce.domain.order;
 import lombok.Getter;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -11,6 +12,7 @@ public class Order {
     private final UUID id = UUID.randomUUID();
     private final List<OrderItem> items;
     private final Client client;
+    private final LocalDateTime createdAt;
     private OrderStatus status;
 
     public Order(List<OrderItem> items, Client client) {
@@ -19,6 +21,7 @@ public class Order {
 
         this.items = List.copyOf(items);
         this.client = client;
+        this.createdAt = LocalDateTime.now();
         this.status = OrderStatus.NEW;
     }
 
