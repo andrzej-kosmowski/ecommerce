@@ -1,8 +1,10 @@
 package com.ecommerce.domain.order;
 
+import com.ecommerce.exception.InvalidOrderStateException;
 import lombok.Getter;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -11,6 +13,7 @@ public class Order {
     private final UUID id = UUID.randomUUID();
     private final List<OrderItem> items;
     private final Client client;
+    private final LocalDateTime createdAt;
     private OrderStatus status;
 
     public Order(List<OrderItem> items, Client client) {
@@ -19,6 +22,7 @@ public class Order {
 
         this.items = List.copyOf(items);
         this.client = client;
+        this.createdAt = LocalDateTime.now();
         this.status = OrderStatus.NEW;
     }
 
@@ -30,21 +34,21 @@ public class Order {
 
     public void processing() {
         if (status != OrderStatus.NEW)  {
-            throw new IllegalStateException("Order can only be processed from NEW state");
+            throw new InvalidOrderStateException("Order can only be processed from NEW state");
         }
         status = OrderStatus.PROCESSING;
     }
 
     public void completed() {
         if (status != OrderStatus.PROCESSING) {
-            throw new IllegalStateException("Order can only be completed from PROCESSING state");
+            throw new InvalidOrderStateException("Order can only be processed from PROCESSING state");
         }
         status = OrderStatus.COMPLETED;
     }
 
     public void cancel() {
         if (status == OrderStatus.COMPLETED) {
-            throw new IllegalStateException("Completed order can only be cancelled");
+            throw new InvalidOrderStateException("Completed order cannot be cancelled");
         }
         status = OrderStatus.CANCELLED;
     }

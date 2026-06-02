@@ -6,6 +6,9 @@ import com.ecommerce.domain.order.Client;
 import com.ecommerce.domain.order.Order;
 import com.ecommerce.domain.order.OrderItem;
 import com.ecommerce.domain.product.Product;
+import com.ecommerce.exception.EmptyCartException;
+import com.ecommerce.exception.NotEnoughStockException;
+import com.ecommerce.exception.ProductNotFoundException;
 import com.ecommerce.service.product.ProductService;
 
 import java.util.List;
@@ -22,10 +25,10 @@ public class CartService {
 
     public void addToCart(String productId, int quantity) {
         Product product = productService.getProductById(productId)
-                .orElseThrow(() -> new IllegalArgumentException("Product not found"));
+                .orElseThrow(() -> new ProductNotFoundException(productId));
 
         if (product.getAvailableQuantity() < quantity) {
-            throw new IllegalArgumentException("Not enough stock");
+            throw new NotEnoughStockException(product.getName());
         }
 
         cart.add(product, quantity);
@@ -41,7 +44,7 @@ public class CartService {
 
     public Order checkout(Client client) {
         if (cart.isEmpty()) {
-            throw new IllegalArgumentException("Cart is empty");
+            throw new EmptyCartException();
         }
 
         List<OrderItem> items = cart.getItems()

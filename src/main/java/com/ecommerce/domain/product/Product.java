@@ -1,5 +1,6 @@
 package com.ecommerce.domain.product;
 
+import com.ecommerce.exception.NotEnoughStockException;
 import lombok.Getter;
 
 import java.math.BigDecimal;
@@ -33,7 +34,7 @@ public abstract class Product {
         validateAmount(quantity);
 
         if (quantity > availableQuantity) {
-            throw new IllegalArgumentException("Not enough quantity for this product");
+            throw new NotEnoughStockException(name);
         }
 
         this.availableQuantity -= quantity;

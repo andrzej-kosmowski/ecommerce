@@ -1,5 +1,6 @@
 package com.ecommerce.domain.order;
 
+import com.ecommerce.exception.OrderProcessingException;
 import com.ecommerce.service.billing.Billable;
 
 public class OrderProcessor {
@@ -22,7 +23,7 @@ public class OrderProcessor {
 
     private void validate(Order order) {
         if (order == null) {
-            throw new IllegalArgumentException("Order cannot be null");
+            throw new OrderProcessingException("Order is null");
         }
     }
 }

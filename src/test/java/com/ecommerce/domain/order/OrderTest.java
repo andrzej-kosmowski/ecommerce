@@ -7,6 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
@@ -40,6 +41,20 @@ class OrderTest {
 
         assertThat(order.getTotalPrice())
                 .isEqualTo(BigDecimal.valueOf(398));
+    }
+
+    @Test
+    @DisplayName("should set current creation time when order")
+    void shouldSetCurrentCreationTimeWhenOrderIsValid() {
+        LocalDateTime before = LocalDateTime.now();
+
+        Order order = new Order(List.of(orderItem), client);
+
+        LocalDateTime after = LocalDateTime.now();
+
+        assertThat(order.getCreatedAt())
+                .isBetween(before, after);
+
     }
 
     @Test
