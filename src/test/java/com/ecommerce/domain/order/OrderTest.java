@@ -1,6 +1,5 @@
 package com.ecommerce.domain.order;
 
-import com.ecommerce.domain.discount.NoDiscount;
 import com.ecommerce.domain.discount.PercentageDiscount;
 import com.ecommerce.domain.product.Electronics;
 import com.ecommerce.domain.product.Product;
@@ -9,7 +8,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.List;
 
