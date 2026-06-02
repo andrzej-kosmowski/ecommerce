@@ -7,6 +7,7 @@ import lombok.Getter;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -16,7 +17,7 @@ public class Order {
     private final UUID id = UUID.randomUUID();
     private final List<OrderItem> items;
     private final Client client;
-    private final LocalDateTime createdAt;
+    private final ZonedDateTime createdAt;
     private final DiscountPolicy discountPolicy;
     private OrderStatus status;
 
@@ -34,7 +35,7 @@ public class Order {
         this.items = List.copyOf(items);
         this.client = client;
         this.discountPolicy = Objects.requireNonNull(discountPolicy, "Discount policy cannot be null");
-        this.createdAt = LocalDateTime.now();
+        this.createdAt = ZonedDateTime.now();
         this.status = OrderStatus.NEW;
     }
 

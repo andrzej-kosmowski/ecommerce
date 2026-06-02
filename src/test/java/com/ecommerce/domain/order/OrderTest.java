@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
@@ -61,11 +62,11 @@ class OrderTest {
     @Test
     @DisplayName("should set current creation time when order")
     void shouldSetCurrentCreationTimeWhenOrderIsValid() {
-        LocalDateTime before = LocalDateTime.now();
+        ZonedDateTime before = ZonedDateTime.now();
 
         Order order = new Order(List.of(orderItem), client);
 
-        LocalDateTime after = LocalDateTime.now();
+        ZonedDateTime after = ZonedDateTime.now();
 
         assertThat(order.getCreatedAt())
                 .isBetween(before, after);

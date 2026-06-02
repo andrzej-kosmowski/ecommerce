@@ -4,6 +4,7 @@ import com.ecommerce.domain.order.Invoice;
 import com.ecommerce.domain.order.Order;
 
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class BillingService implements Billable {
@@ -12,7 +13,7 @@ public class BillingService implements Billable {
 
     @Override
     public Invoice toInvoice(Order order) {
-        LocalDateTime now = LocalDateTime.now();
+        ZonedDateTime now = ZonedDateTime.now();
 
         String date = now.toLocalDate().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
 

@@ -14,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -43,7 +44,7 @@ class OrderProcessorTest {
 
             Invoice invoice = new Invoice(
                     "INV-20260601-1",
-                    LocalDateTime.now(),
+                    ZonedDateTime.now(),
                     null,
                     null,
                     null
@@ -81,7 +82,7 @@ class OrderProcessorTest {
 
             Invoice invoice = new Invoice(
                     "INV-20260601-1",
-                    LocalDateTime.now(),
+                    ZonedDateTime.now(),
                     null,
                     null,
                     null
