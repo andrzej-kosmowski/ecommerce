@@ -1,14 +1,15 @@
 package com.ecommerce.domain.order;
 
 import com.ecommerce.exception.OrderProcessingException;
-import com.ecommerce.repository.order.OrderRepository;
+import com.ecommerce.repository.order.OrderReader;
+import com.ecommerce.repository.order.OrderWriter;
 import com.ecommerce.service.billing.Billable;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class OrderProcessor {
     private final Billable billable;
-    private final OrderRepository orderRepository;
+    private final OrderWriter orderWriter;
 
     public Invoice processOrder(Order order) {
         validate(order);
@@ -19,7 +20,7 @@ public class OrderProcessor {
 
         order.completed();
 
-        orderRepository.save(order);
+        orderWriter.save(order);
 
         return invoice;
     }

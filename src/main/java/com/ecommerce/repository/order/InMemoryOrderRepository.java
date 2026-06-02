@@ -4,7 +4,7 @@ import com.ecommerce.domain.order.Order;
 
 import java.util.*;
 
-public class InMemoryOrderRepository implements OrderRepository {
+public class InMemoryOrderRepository implements OrderReader, OrderWriter {
 
     private final Map<UUID, Order> orders = new HashMap<>();
 
