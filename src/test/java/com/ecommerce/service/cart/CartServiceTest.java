@@ -118,6 +118,20 @@ class CartServiceTest {
         }
 
         @Test
+        @DisplayName("should reduce product stock after checkout")
+        void shouldReduceProductStockAfterCheckout() {
+            when(productService.getProductById(product.getId()))
+                    .thenReturn(Optional.of(product));
+
+            cartService.addToCart(product.getId(), 2);
+
+            cartService.checkout(client);
+
+            assertThat(product.getAvailableQuantity())
+                    .isEqualTo(8);
+        }
+
+        @Test
         @DisplayName("should throw exception when cart is empty")
         void shouldThrowExceptionWhenCartIsEmpty() {
 
