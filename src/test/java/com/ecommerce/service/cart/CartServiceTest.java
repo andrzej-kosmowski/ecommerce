@@ -1,6 +1,7 @@
 package com.ecommerce.service.cart;
 
 import com.ecommerce.domain.cart.Cart;
+import com.ecommerce.domain.discount.PercentageDiscount;
 import com.ecommerce.domain.order.Client;
 import com.ecommerce.domain.order.Order;
 import com.ecommerce.domain.product.Electronics;
@@ -83,7 +84,7 @@ class CartServiceTest {
     class Checkout {
 
         @Test
-        @DisplayName("shoud create order and clear cart when order is successful")
+        @DisplayName("should create order and clear cart when order is successful")
         void shouldCreateOrderAndClearCartWhenOrderIsSuccessful() {
 
             when(productService.getProductById(product.getId()))
@@ -97,6 +98,23 @@ class CartServiceTest {
             assertThat(order.getItems()).hasSize(1);
 
             assertThat(cartService.viewCart()).isEmpty();
+        }
+
+        @Test
+        @DisplayName("should create order with percentage discount")
+        void shouldCreateOrderWithPercentageDiscountWhenOrderIsSuccessful() {
+            when(productService.getProductById(product.getId()))
+                    .thenReturn(Optional.of(product));
+
+            cartService.addToCart(product.getId(), 2);
+
+            Order order = cartService.checkout(client, new PercentageDiscount(BigDecimal.valueOf(10)));
+
+            assertThat(order.getTotalPrice())
+                    .isEqualByComparingTo("358.20");
+
+            assertThat(cartService.viewCart())
+                    .isEmpty();
         }
 
         @Test

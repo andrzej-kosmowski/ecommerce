@@ -4,6 +4,8 @@ import com.ecommerce.cli.EcommerceApplication;
 import com.ecommerce.domain.cart.Cart;
 import com.ecommerce.domain.order.OrderProcessor;
 import com.ecommerce.domain.product.*;
+import com.ecommerce.repository.order.FileOrderRepository;
+import com.ecommerce.repository.order.InMemoryOrderRepository;
 import com.ecommerce.repository.product.InMemoryProductRepository;
 import com.ecommerce.service.billing.BillingService;
 import com.ecommerce.service.cart.CartService;
@@ -50,6 +52,12 @@ public class Main {
         productRepository.save(smartphone);
         productRepository.save(mouse);
 
+        EcommerceApplication application = getApplication(productRepository);
+
+        application.run();
+    }
+
+    private static EcommerceApplication getApplication(InMemoryProductRepository productRepository) {
         ProductService productService = new ProductService(productRepository);
 
         Cart cart = new Cart();
@@ -60,15 +68,14 @@ public class Main {
         );
 
         OrderProcessor orderProcessor = new OrderProcessor(
-                new BillingService()
+                new BillingService(),
+                new FileOrderRepository("data/orders.txt")
         );
 
-        EcommerceApplication application = new EcommerceApplication(
+        return new EcommerceApplication(
                 productService,
                 cartService,
                 orderProcessor
         );
-
-        application.run();
     }
 }
