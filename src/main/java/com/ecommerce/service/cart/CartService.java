@@ -66,8 +66,17 @@ public class CartService {
                 discountPolicy
         );
 
+        reduceStock();
+
         cart.clear();
 
         return order;
+    }
+
+    private void reduceStock() {
+        cart.getItems()
+                .forEach(item ->
+                        item.getProduct().decreaseQuantity(item.getQuantity())
+                );
     }
 }
