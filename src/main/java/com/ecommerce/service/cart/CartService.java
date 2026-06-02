@@ -2,6 +2,9 @@ package com.ecommerce.service.cart;
 
 import com.ecommerce.domain.cart.Cart;
 import com.ecommerce.domain.cart.CartItem;
+import com.ecommerce.domain.discount.DiscountPolicy;
+import com.ecommerce.domain.discount.NoDiscount;
+import com.ecommerce.domain.discount.PercentageDiscount;
 import com.ecommerce.domain.order.Client;
 import com.ecommerce.domain.order.Order;
 import com.ecommerce.domain.order.OrderItem;
@@ -11,6 +14,7 @@ import com.ecommerce.exception.NotEnoughStockException;
 import com.ecommerce.exception.ProductNotFoundException;
 import com.ecommerce.service.product.ProductService;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class CartService {
@@ -43,6 +47,10 @@ public class CartService {
     }
 
     public Order checkout(Client client) {
+        return checkout(client, new NoDiscount());
+    }
+
+    public Order checkout(Client client, DiscountPolicy discountPolicy) {
         if (cart.isEmpty()) {
             throw new EmptyCartException();
         }
@@ -54,7 +62,8 @@ public class CartService {
 
         Order order = new Order(
                 items,
-                client
+                client,
+                discountPolicy
         );
 
         cart.clear();
