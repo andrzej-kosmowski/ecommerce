@@ -1,6 +1,7 @@
 package com.ecommerce.domain.order;
 
 import com.ecommerce.exception.OrderProcessingException;
+import com.ecommerce.repository.order.OrderWriter;
 import com.ecommerce.service.billing.Billable;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -25,6 +26,9 @@ class OrderProcessorTest {
 
     @Mock
     private Order order;
+
+    @Mock
+    private OrderWriter orderWriter;
 
     @InjectMocks
     private OrderProcessor orderProcessor;
@@ -59,6 +63,7 @@ class OrderProcessorTest {
             verify(order).processing();
             verify(billable).toInvoice(order);
             verify(order).completed();
+            verify(orderWriter).save(order);
         }
 
         @Test
