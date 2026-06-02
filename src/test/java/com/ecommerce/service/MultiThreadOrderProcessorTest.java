@@ -2,7 +2,8 @@ package com.ecommerce.service;
 
 import com.ecommerce.domain.order.Invoice;
 import com.ecommerce.domain.order.Order;
-import com.ecommerce.domain.order.OrderProcessor;
+import com.ecommerce.service.order.OrderProcessor;
+import com.ecommerce.service.order.MultiThreadOrderProcessor;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;

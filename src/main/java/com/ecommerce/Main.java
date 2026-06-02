@@ -2,10 +2,9 @@ package com.ecommerce;
 
 import com.ecommerce.cli.EcommerceApplication;
 import com.ecommerce.domain.cart.Cart;
-import com.ecommerce.domain.order.OrderProcessor;
+import com.ecommerce.service.order.OrderProcessor;
 import com.ecommerce.domain.product.*;
 import com.ecommerce.repository.order.FileOrderRepository;
-import com.ecommerce.repository.order.InMemoryOrderRepository;
 import com.ecommerce.repository.product.InMemoryProductRepository;
 import com.ecommerce.service.billing.BillingService;
 import com.ecommerce.service.cart.CartService;

@@ -1,8 +1,7 @@
-package com.ecommerce.service;
+package com.ecommerce.service.order;
 
 import com.ecommerce.domain.order.Invoice;
 import com.ecommerce.domain.order.Order;
-import com.ecommerce.domain.order.OrderProcessor;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;

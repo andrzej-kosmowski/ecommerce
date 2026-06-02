@@ -3,7 +3,7 @@ package com.ecommerce.cli;
 import com.ecommerce.domain.order.Client;
 import com.ecommerce.domain.order.Invoice;
 import com.ecommerce.domain.order.Order;
-import com.ecommerce.domain.order.OrderProcessor;
+import com.ecommerce.service.order.OrderProcessor;
 import com.ecommerce.service.cart.CartService;
 import com.ecommerce.service.product.ProductService;
 
