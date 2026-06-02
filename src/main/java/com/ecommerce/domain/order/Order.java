@@ -1,11 +1,14 @@
 package com.ecommerce.domain.order;
 
+import com.ecommerce.domain.discount.DiscountPolicy;
+import com.ecommerce.domain.discount.NoDiscount;
 import com.ecommerce.exception.InvalidOrderStateException;
 import lombok.Getter;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Getter
@@ -14,22 +17,33 @@ public class Order {
     private final List<OrderItem> items;
     private final Client client;
     private final LocalDateTime createdAt;
+    private final DiscountPolicy discountPolicy;
     private OrderStatus status;
 
     public Order(List<OrderItem> items, Client client) {
+        this(items, client, new NoDiscount());
+    }
 
+    public Order(
+            List<OrderItem> items,
+            Client client,
+            DiscountPolicy discountPolicy)
+    {
         validate(items, client);
 
         this.items = List.copyOf(items);
         this.client = client;
+        this.discountPolicy = Objects.requireNonNull(discountPolicy, "Discount policy cannot be null");
         this.createdAt = LocalDateTime.now();
         this.status = OrderStatus.NEW;
     }
 
     public BigDecimal getTotalPrice() {
-        return items.stream()
+        BigDecimal total = items.stream()
                 .map(OrderItem::getTotalPrice)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        return discountPolicy.applyDiscount(total);
     }
 
     public void processing() {
