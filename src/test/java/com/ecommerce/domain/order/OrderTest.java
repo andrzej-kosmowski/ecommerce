@@ -1,5 +1,7 @@
 package com.ecommerce.domain.order;
 
+import com.ecommerce.domain.discount.NoDiscount;
+import com.ecommerce.domain.discount.PercentageDiscount;
 import com.ecommerce.domain.product.Electronics;
 import com.ecommerce.domain.product.Product;
 import org.junit.jupiter.api.BeforeEach;
@@ -41,6 +43,19 @@ class OrderTest {
 
         assertThat(order.getTotalPrice())
                 .isEqualTo(BigDecimal.valueOf(398));
+    }
+
+    @Test
+    @DisplayName("should calculate total price when 10 percent discount applied")
+    void shouldCalculateTotalPriceWhenPercentageDiscountApplied() {
+        Order order = new Order(
+                List.of(orderItem),
+                client,
+                new PercentageDiscount(BigDecimal.valueOf(10))
+        );
+
+        assertThat(order.getTotalPrice())
+                .isEqualByComparingTo("358.20");
     }
 
     @Test
