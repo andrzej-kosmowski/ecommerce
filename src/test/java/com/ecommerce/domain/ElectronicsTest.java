@@ -1,6 +1,7 @@
 package com.ecommerce.domain;
 
 import com.ecommerce.domain.product.Electronics;
+import com.ecommerce.exception.NotEnoughStockException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -63,8 +64,8 @@ class ElectronicsTest {
         void shouldThrowExceptionWhenNotEnoughStock() {
 
             assertThatThrownBy(() -> product.decreaseQuantity(50))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("Not enough quantity");
+                    .isInstanceOf(NotEnoughStockException.class)
+                    .hasMessageContaining("Not enough stock for");
         }
 
         @Test

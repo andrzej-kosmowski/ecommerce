@@ -5,6 +5,8 @@ import com.ecommerce.domain.order.Client;
 import com.ecommerce.domain.order.Order;
 import com.ecommerce.domain.product.Electronics;
 import com.ecommerce.domain.product.Product;
+import com.ecommerce.exception.EmptyCartException;
+import com.ecommerce.exception.ProductNotFoundException;
 import com.ecommerce.service.product.ProductService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -71,8 +73,8 @@ class CartServiceTest {
                     .thenReturn(Optional.empty());
 
             assertThatThrownBy(() -> cartService.addToCart(product.getId(), 2))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("Product not found");
+                    .isInstanceOf(ProductNotFoundException.class)
+                    .hasMessageContaining("not found");
         }
     }
 
@@ -103,7 +105,7 @@ class CartServiceTest {
 
             assertThatThrownBy(() ->
                     cartService.checkout(client))
-                    .isInstanceOf(IllegalArgumentException.class)
+                    .isInstanceOf(EmptyCartException.class)
                     .hasMessage("Cart is empty");
         }
     }

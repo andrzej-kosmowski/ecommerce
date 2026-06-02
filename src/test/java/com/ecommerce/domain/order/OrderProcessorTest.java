@@ -1,5 +1,6 @@
 package com.ecommerce.domain.order;
 
+import com.ecommerce.exception.OrderProcessingException;
 import com.ecommerce.service.billing.Billable;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -65,8 +66,8 @@ class OrderProcessorTest {
         void shouldThrowExceptionWhenOrderIsNull() {
 
             assertThatThrownBy(() -> orderProcessor.processOrder(null))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("Order cannot be null");
+                    .isInstanceOf(OrderProcessingException.class)
+                    .hasMessage("Order is null");
         }
 
         @Test
