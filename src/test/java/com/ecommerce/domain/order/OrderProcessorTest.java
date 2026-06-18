@@ -57,10 +57,6 @@ class OrderProcessorTest {
             assertThat(result).isEqualTo(invoice);
 
             verify(order).markAsProcessing();
-            verify(order).markAsCompleted();
-            verify(billable).toInvoice(order);
-
-            verify(order).markAsProcessing();
             verify(billable).toInvoice(order);
             verify(order).markAsCompleted();
             verify(orderWriter).save(order);
