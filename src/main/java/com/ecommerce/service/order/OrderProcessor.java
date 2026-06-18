@@ -15,11 +15,11 @@ public class OrderProcessor {
     public Invoice processOrder(Order order) {
         validate(order);
 
-        order.processing();
+        order.markAsProcessing();
 
         Invoice invoice = billable.toInvoice(order);
 
-        order.completed();
+        order.markAsCompleted();
 
         orderWriter.save(order);
 

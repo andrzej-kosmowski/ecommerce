@@ -46,21 +46,21 @@ public class Order {
         return discountPolicy.applyDiscount(total);
     }
 
-    public void processing() {
+    public void markAsProcessing() {
         if (status != OrderStatus.NEW)  {
             throw new InvalidOrderStateException("Order can only be processed from NEW state");
         }
         status = OrderStatus.PROCESSING;
     }
 
-    public void completed() {
+    public void markAsCompleted() {
         if (status != OrderStatus.PROCESSING) {
             throw new InvalidOrderStateException("Order can only be processed from PROCESSING state");
         }
         status = OrderStatus.COMPLETED;
     }
 
-    public void cancel() {
+    public void markAsCancelled() {
         if (status == OrderStatus.COMPLETED) {
             throw new InvalidOrderStateException("Completed order cannot be cancelled");
         }
