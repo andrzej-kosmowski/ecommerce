@@ -34,11 +34,11 @@ public class Computer extends Product {
     }
 
     private void validateSpecification(int ram, int disk) {
-        if (ram < 0) {
+        if (ram <= 0) {
             throw new IllegalArgumentException("RAM must be a greater than 0");
         }
 
-        if (disk < 0) {
+        if (disk <= 0) {
             throw new IllegalArgumentException("Disk size must be a greater than 0");
         }
     }
