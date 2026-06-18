@@ -13,7 +13,7 @@ import java.util.UUID;
 
 @Getter
 public class Order {
-    private final UUID id = UUID.randomUUID();
+    private final UUID id;
     private final List<OrderItem> items;
     private final Client client;
     private final ZonedDateTime createdAt;
@@ -30,7 +30,7 @@ public class Order {
             DiscountPolicy discountPolicy)
     {
         validate(items, client);
-
+        this.id = UUID.randomUUID();
         this.items = List.copyOf(items);
         this.client = client;
         this.discountPolicy = Objects.requireNonNull(discountPolicy, "Discount policy cannot be null");
