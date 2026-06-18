@@ -1,5 +1,6 @@
 package com.ecommerce.cli;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class InputReader {
@@ -7,7 +8,6 @@ public class InputReader {
 
     public static String readString(String message) {
         System.out.println(message);
-
         return scanner.nextLine();
     }
 
@@ -16,7 +16,7 @@ public class InputReader {
             try {
                 System.out.println(message);
                 return scanner.nextInt();
-            } catch (NumberFormatException e) {
+            } catch (InputMismatchException e) {
                 System.out.println("Please enter a valid number.");
             } finally {
                 scanner.nextLine();
