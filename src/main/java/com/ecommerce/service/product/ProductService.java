@@ -6,6 +6,8 @@ import com.ecommerce.repository.product.ProductRepository;
 import java.util.List;
 import java.util.Optional;
 
+// DIP: the product service uses the ProductRepository interface,
+// so you can change the repository, e.g. from memory to database.
 public class ProductService {
 
     private final ProductRepository productRepository;

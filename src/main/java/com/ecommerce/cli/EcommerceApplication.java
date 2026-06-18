@@ -6,9 +6,11 @@ import com.ecommerce.domain.order.Order;
 import com.ecommerce.service.order.OrderProcessor;
 import com.ecommerce.service.cart.CartService;
 import com.ecommerce.service.product.ProductService;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.UUID;
 
+@Slf4j
 public class EcommerceApplication {
     private final ProductService productService;
     private final CartService cartService;
@@ -33,7 +35,7 @@ public class EcommerceApplication {
 
                 handle(option);
             } catch (Exception ex) {
-                System.out.println(ex.getMessage());
+                log.error(ex.getMessage());
             }
         }
     }
@@ -49,12 +51,12 @@ public class EcommerceApplication {
     }
 
     private void showProducts() {
-        System.out.println("\nAVAIABLE PRODUCTS:");
+        log.info("\nAVAILABLE PRODUCTS:");
 
         productService.getAllProducts()
                 .forEach(product ->
-                        System.out.printf(
-                                "%s | %s | %s PLN | stock: %d%n",
+                        log.info(
+                                "{} | {} | {} PLN | stock: {}",
                                 product.getId(),
                                 product.getName(),
                                 product.getPrice(),
@@ -69,21 +71,21 @@ public class EcommerceApplication {
 
         cartService.addToCart(productId, quantity);
 
-        System.out.println("Added to cart!");
+        log.info("Added to cart");
     }
 
     private void viewCart() {
-        System.out.println("\nCART");
+        log.info("\nCART");
 
         if (cartService.viewCart().isEmpty()) {
-            System.out.println("Cart is empty!");
+            log.info("Cart is empty!");
             return;
         }
 
         cartService.viewCart()
                 .forEach(item ->
-                        System.out.printf(
-                                "%s x%d = %s PLN%n",
+                        log.info(
+                                "{} x{} = {} PLN",
                                 item.getProduct().getName(),
                                 item.getQuantity(),
                                 item.totalPrice()
@@ -101,12 +103,12 @@ public class EcommerceApplication {
         Order order = cartService.checkout(client);
         Invoice invoice = orderProcessor.processOrder(order);
 
-        System.out.println("\nORDER COMPLETED");
-        System.out.println(invoice);
+        log.info("\nORDER COMPLETED");
+        log.info("{}", invoice);
     }
 
     private void exit() {
         running = false;
-        System.out.println("Bye!");
+        log.info("Bye!");
     }
 }

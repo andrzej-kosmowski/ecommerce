@@ -45,6 +45,7 @@ public class Cart {
     public void clear() {
         items.clear();
     }
+
     private void validate(Product product) {
         if (product == null) {
             throw new IllegalArgumentException("Product cannot be null");

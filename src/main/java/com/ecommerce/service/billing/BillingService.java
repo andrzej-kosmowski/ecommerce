@@ -7,21 +7,15 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class BillingService implements Billable {
+    private static final DateTimeFormatter INVOICE_DATE_FORMATTER =
+            DateTimeFormatter.ofPattern("yyyyMMdd");
     private String lastDate = "";
     private int counter = 1;
 
     @Override
     public Invoice toInvoice(Order order) {
         ZonedDateTime now = ZonedDateTime.now();
-
-        String date = now.toLocalDate().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
-
-        if (!date.equals(lastDate)) {
-            lastDate = date;
-            counter = 1;
-        }
-
-        String invoiceNumber = "INV-" + date + "-" + counter++;
+        String invoiceNumber = generateInvoiceNumber(now);
 
         return new Invoice(
                 invoiceNumber,
@@ -30,5 +24,16 @@ public class BillingService implements Billable {
                 order.getTotalPrice(),
                 order.getItems()
         );
+    }
+
+    private synchronized String generateInvoiceNumber(ZonedDateTime now) {
+        String date = now.toLocalDate().format(INVOICE_DATE_FORMATTER);
+
+        if (!date.equals(lastDate)) {
+            lastDate = date;
+            counter = 1;
+        }
+
+        return "INV-" + date + "-" + counter++;
     }
 }

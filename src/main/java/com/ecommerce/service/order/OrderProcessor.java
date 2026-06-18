@@ -7,6 +7,8 @@ import com.ecommerce.repository.order.OrderWriter;
 import com.ecommerce.service.billing.Billable;
 import lombok.RequiredArgsConstructor;
 
+// DIP: OrderProcessor depends on the Billable and OrderWriter abstractions,
+// and not from specific BillingService or FileOrderRepository classes.
 @RequiredArgsConstructor
 public class OrderProcessor {
     private final Billable billable;
@@ -15,11 +17,11 @@ public class OrderProcessor {
     public Invoice processOrder(Order order) {
         validate(order);
 
-        order.processing();
+        order.markAsProcessing();
 
         Invoice invoice = billable.toInvoice(order);
 
-        order.completed();
+        order.markAsCompleted();
 
         orderWriter.save(order);
 

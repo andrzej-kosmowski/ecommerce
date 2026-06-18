@@ -6,6 +6,8 @@ import lombok.Getter;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+// LSP: all classes inheriting from Product can be used as Product
+// in cart, order and repository.
 @Getter
 public abstract class Product {
     private final String id;

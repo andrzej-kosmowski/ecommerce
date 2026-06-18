@@ -266,8 +266,8 @@ Multiple orders can be processed simultaneously using ExecutorService.
 ExecutorService executorService =
         Executors.newFixedThreadPool(3);
 
-AsyncOrderProcessor processor =
-        new AsyncOrderProcessor(
+MultiThreadOrderProcessor processor =
+        new MultiThreadOrderProcessor(
                 orderProcessor,
                 executorService
         );

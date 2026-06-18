@@ -13,7 +13,7 @@ import java.util.UUID;
 
 @Getter
 public class Order {
-    private final UUID id = UUID.randomUUID();
+    private final UUID id;
     private final List<OrderItem> items;
     private final Client client;
     private final ZonedDateTime createdAt;
@@ -30,7 +30,7 @@ public class Order {
             DiscountPolicy discountPolicy)
     {
         validate(items, client);
-
+        this.id = UUID.randomUUID();
         this.items = List.copyOf(items);
         this.client = client;
         this.discountPolicy = Objects.requireNonNull(discountPolicy, "Discount policy cannot be null");
@@ -46,21 +46,21 @@ public class Order {
         return discountPolicy.applyDiscount(total);
     }
 
-    public void processing() {
+    public void markAsProcessing() {
         if (status != OrderStatus.NEW)  {
             throw new InvalidOrderStateException("Order can only be processed from NEW state");
         }
         status = OrderStatus.PROCESSING;
     }
 
-    public void completed() {
+    public void markAsCompleted() {
         if (status != OrderStatus.PROCESSING) {
             throw new InvalidOrderStateException("Order can only be processed from PROCESSING state");
         }
         status = OrderStatus.COMPLETED;
     }
 
-    public void cancel() {
+    public void markAsCancelled() {
         if (status == OrderStatus.COMPLETED) {
             throw new InvalidOrderStateException("Completed order cannot be cancelled");
         }

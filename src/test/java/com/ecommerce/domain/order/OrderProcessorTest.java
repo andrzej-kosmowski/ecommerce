@@ -56,13 +56,9 @@ class OrderProcessorTest {
             assertThat(result).isNotNull();
             assertThat(result).isEqualTo(invoice);
 
-            verify(order).processing();
-            verify(order).completed();
+            verify(order).markAsProcessing();
             verify(billable).toInvoice(order);
-
-            verify(order).processing();
-            verify(billable).toInvoice(order);
-            verify(order).completed();
+            verify(order).markAsCompleted();
             verify(orderWriter).save(order);
         }
 
@@ -77,7 +73,7 @@ class OrderProcessorTest {
 
         @Test
         @DisplayName("should always mark order as processing before billing")
-        void shouldAlwaysMarkOrderAsProcessingBeforeBilling() {
+        void shouldAlwaysMarkOrderAsMarkAsProcessingBeforeBilling() {
 
             Invoice invoice = new Invoice(
                     "INV-20260601-1",
@@ -93,9 +89,9 @@ class OrderProcessorTest {
 
             InOrder inOrder = inOrder(order, billable);
 
-            inOrder.verify(order).processing();
+            inOrder.verify(order).markAsProcessing();
             inOrder.verify(billable).toInvoice(order);
-            inOrder.verify(order).completed();
+            inOrder.verify(order).markAsCompleted();
         }
     }
 }
